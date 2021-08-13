@@ -14,7 +14,8 @@ activity <- read.csv("activity.csv")
 ## Create Histogram
 ```{r, echo = TRUE}
 steps_per_day<- aggregate(steps ~ date, activity, FUN=sum)
-hist(steps_per_day$steps, col = "green", main = "Steps Per Day", xlab = "Steps")
+Histogram1 <- hist(steps_per_day$steps, col = "green", main = "Steps Per Day", xlab = "Steps")
+Histogram1
 ```
 
 ## What is mean and median total number of steps taken per day?
@@ -27,7 +28,8 @@ median(steps_per_day$steps)
 ```{r, echo = TRUE}
 daily_activity <- aggregate(steps ~ interval, activity, FUN = mean, na.rm = TRUE)
 names(daily_activity) <- c("interval", "avgsteps")
-ggplot(daily_activity, aes(interval, avgsteps)) + geom_line() + ggtitle("Average Daily Activity Pattern") + xlab("5-min Intervals") + ylab("Average Steps per Day")
+Plot1 <- ggplot(daily_activity, aes(interval, avgsteps)) + geom_line() + ggtitle("Average Daily Activity Pattern") + xlab("5-min Intervals") + ylab("Average Steps per Day")
+Plot1
 ```
 
 ## Which 5-min interval contains the max number of steps?
@@ -50,7 +52,8 @@ ReplacedNA$steps[is.na(ReplacedNA$steps)] <- mean(daily_activity$avgsteps)
 ##Histogram and mean/median of new dataset without missing values
 ```{r, echo=TRUE}
 steps_per_day2 <- aggregate(steps ~ date, ReplacedNA, FUN = sum, na.rm = TRUE)
-hist(steps_per_day2$steps, col = "green", main = "Steps Per Day", xlab = "Steps")
+Histogram2 <- hist(steps_per_day2$steps, col = "green", main = "Steps Per Day", xlab = "Steps")
+Histogram2
 
 mean(steps_per_day2$steps)
 median(steps_per_day2$steps)
@@ -70,5 +73,6 @@ ReplacedNA <- cbind(ReplacedNA, days, DayofWeek)
 
 daytype_activity <- aggregate(steps ~ interval + DayofWeek, ReplacedNA, FUN = mean, na.rm = TRUE)
 names(daytype_activity) <- c("interval", "DayofWeek", "avgsteps")
-ggplot(daytype_activity, aes(interval, avgsteps, color = DayofWeek)) + geom_line() + facet_wrap(~DayofWeek) + ggtitle("Daily Average Steps by Day of Week") + xlab("Interval") + ylab("Average Number of Steps")
+Plot2 <- ggplot(daytype_activity, aes(interval, avgsteps, color = DayofWeek)) + geom_line() + facet_wrap(~DayofWeek) + ggtitle("Daily Average Steps by Day of Week") + xlab("Interval") + ylab("Average Number of Steps")
+Plot2
 ```
