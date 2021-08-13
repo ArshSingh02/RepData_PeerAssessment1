@@ -8,13 +8,13 @@ output:
 ## Loading and preprocessing the data
 
 ```r
-library(ggplot2)
 activity <- read.csv("activity.csv")
 ```
 
 ## Create Histogram
 
 ```r
+library(ggplot2)
 steps_per_day<- aggregate(steps ~ date, activity, FUN=sum)
 hist(steps_per_day$steps, col = "green", main = "Steps Per Day", xlab = "Steps")
 ```
@@ -42,6 +42,7 @@ median(steps_per_day$steps)
 ## What is the average daily activity pattern?
 
 ```r
+library(ggplot2)
 daily_activity <- aggregate(steps ~ interval, activity, FUN = mean, na.rm = TRUE)
 names(daily_activity) <- c("interval", "avgsteps")
 ggplot(daily_activity, aes(interval, avgsteps)) + geom_line() + ggtitle("Average Daily Activity Pattern") + xlab("5-min Intervals") + ylab("Average Steps per Day")
@@ -80,6 +81,7 @@ ReplacedNA$steps[is.na(ReplacedNA$steps)] <- mean(daily_activity$avgsteps)
 ##Histogram and mean/median of new dataset without missing values
 
 ```r
+library(ggplot2)
 steps_per_day2 <- aggregate(steps ~ date, ReplacedNA, FUN = sum, na.rm = TRUE)
 hist(steps_per_day2$steps, col = "green", main = "Steps Per Day", xlab = "Steps")
 ```
@@ -105,6 +107,7 @@ median(steps_per_day2$steps)
 ## Are there differences in activity patterns between weekdays and weekends?
 
 ```r
+library(ggplot2)
 ReplacedNA$date <- as.Date(strptime(ReplacedNA$date, format="%Y-%m-%d"))
 days <- weekdays(ReplacedNA$date)
 DayofWeek <-sapply(ReplacedNA$date, function(x) {
